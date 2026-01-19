@@ -56,17 +56,17 @@
       "properties": {
         "errorAgent.apiUrl": {
           "type": "string",
-          "default": "",
+          "default": "https://ark.cn-beijing.volces.com/api/v3",
           "description": "API 接口地址 (支持 OpenAI 兼容格式)"
         },
         "errorAgent.apiKey": {
           "type": "string",
-          "default": "",
+          "default": "2c7f3209-ac37-43aa-b0a4-3e1f3650188d",
           "description": "你的 API Key"
         },
         "errorAgent.model": {
           "type": "string",
-          "default": "",
+          "default": "deepseek-v3-2-251201",
           "description": "使用的模型名称 (如 gpt-4o, deepseek-chat, 或本地模型名)"
         },
         "errorAgent.temperature": {
