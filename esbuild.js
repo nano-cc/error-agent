@@ -1,4 +1,6 @@
 const esbuild = require("esbuild");
+const fs = require('fs');
+const path = require('path');
 
 const production = process.argv.includes('--production');
 const watch = process.argv.includes('--watch');
@@ -23,6 +25,27 @@ const esbuildProblemMatcherPlugin = {
 	},
 };
 
+/**
+ * @type {import('esbuild').Plugin}
+ */
+const copyWasmPlugin = {
+  name: 'copy-wasm',
+  setup(build) {
+    build.onEnd(async () => {
+      // 复制 sql.js 的 wasm 文件到 dist 目录
+      const wasmSource = path.join(__dirname, 'node_modules', 'sql.js', 'dist', 'sql-wasm.wasm');
+      const wasmDest = path.join(__dirname, 'dist', 'sql-wasm.wasm');
+      
+      try {
+        await fs.promises.copyFile(wasmSource, wasmDest);
+        console.log('[copy-wasm] Copied sql-wasm.wasm to dist/');
+      } catch (err) {
+        console.error('[copy-wasm] Failed to copy wasm file:', err.message);
+      }
+    });
+  },
+};
+
 async function main() {
 	const ctx = await esbuild.context({
 		entryPoints: [
@@ -40,6 +63,7 @@ async function main() {
 		plugins: [
 			/* add to the end of plugins array */
 			esbuildProblemMatcherPlugin,
+			copyWasmPlugin,
 		],
 	});
 	if (watch) {
