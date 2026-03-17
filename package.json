@@ -15,7 +15,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onView:error-agent-sidebar"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
@@ -32,22 +34,23 @@
         {
           "type": "webview",
           "id": "error-agent-sidebar",
-          "name": "诊断面板"
+          "name": "Error Agent"
         }
       ]
     },
     "commands": [
       {
-        "command": "error-agent.analyze",
-        "title": "Agent: 诊断此报错"
+        "command": "error-agent.focus",
+        "title": "Error Agent: 打开聊天",
+        "icon": "$(comment-discussion)"
       }
     ],
     "menus": {
-      "terminal/context": [
+      "view/title": [
         {
-          "command": "error-agent.analyze",
-          "group": "navigation",
-          "when": "terminalHasBeenCreated"
+          "command": "error-agent.focus",
+          "when": "view == error-agent-sidebar",
+          "group": "navigation"
         }
       ]
     },
@@ -72,7 +75,7 @@
         "errorAgent.temperature": {
           "type": "number",
           "default": 0,
-          "description": "LLM采样温度，与模型输出随机性有关"
+          "description": "LLM 采样温度，与模型输出随机性有关"
         }
       }
     }
@@ -94,6 +97,8 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.19.6",
+    "@types/sql.js": "^1.4.9",
+    "@types/uuid": "^10.0.0",
     "@types/vscode": "^1.92.0",
     "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
@@ -106,9 +111,11 @@
   "dependencies": {
     "@langchain/core": "^1.1.15",
     "@langchain/langgraph": "^1.1.0",
-    "@langchain/openai": "^1.2.2",
+    "@langchain/openai": "^1.2.13",
     "@standard-schema/spec": "^1.1.0",
     "axios": "^1.13.2",
+    "sql.js": "^1.14.1",
+    "uuid": "^13.0.0",
     "zod": "^4.3.5"
   }
 }

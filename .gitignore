@@ -3,3 +3,6 @@ dist
 node_modules
 .vscode-test/
 *.vsix
+design_process/
+error-agent-*/
+.vscode/error_agent/
